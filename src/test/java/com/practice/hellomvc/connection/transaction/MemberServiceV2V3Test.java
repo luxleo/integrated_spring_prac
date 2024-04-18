@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
-class MemberServiceV3Test {
+class MemberServiceV2V3Test {
     private static final String MemberA="memberA";
     private static final String MemberB="memberB";
     private static final String MemberEX="ex";

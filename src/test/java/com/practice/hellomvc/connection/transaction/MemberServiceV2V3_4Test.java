@@ -1,8 +1,10 @@
 package com.practice.hellomvc.connection.transaction;
 
-import com.practice.hellomvc.connection.ConnectionConst;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,17 +15,18 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-
 import java.sql.SQLException;
 
 import static com.practice.hellomvc.connection.ConnectionConst.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+/**
+ * application.yml 등을 이용하여 datasource를 자동등록 할 수 있다.
+ */
 @Slf4j
 @SpringBootTest // @Transactional 어노테이션은 스프링 AOP를 사용하므로 스프링 컨테이너와 함께 동작해야한다.
-class MemberServiceV2_3Test {
+class MemberServiceV2V3_4Test {
     public static final String MEMBER_A = "memberA";
     public static final String MEMBER_B = "memberB";
     public static final String MEMBER_EX = "ex";
@@ -100,11 +103,10 @@ class MemberServiceV2_3Test {
     }
 
     @TestConfiguration
+    @RequiredArgsConstructor
     static class TestConfig{
-        @Bean
-        DataSource dataSource(){
-            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        }
+        private final DataSource dataSource;
+
         @Bean
         PlatformTransactionManager transactionManager(DataSource dataSource){
             return new DataSourceTransactionManager(dataSource);
